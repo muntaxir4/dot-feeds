@@ -1,6 +1,7 @@
 import { PrismaClient, withAccelerate } from "@repo/db";
 import { Context } from "hono";
 
+//used only to get the type of prismaAccelerate
 const prismaAccelerate = new PrismaClient().$extends(withAccelerate());
 
 const db: {
