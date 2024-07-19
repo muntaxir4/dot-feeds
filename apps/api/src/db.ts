@@ -11,7 +11,7 @@ const db: {
 export const PrismaSingleton = (c: Context) => {
   if (db.prisma) return db.prisma;
   db.prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
+    datasourceUrl: process.env.DATABASE_URL,
   }).$extends(withAccelerate());
   return db.prisma;
 };

@@ -14,7 +14,7 @@ blog.post("/create", isAuthenticated, async (c) => {
   const { username } = c.get("user");
   try {
     const { title, content } = body;
-    const post = await prisma.blog.create({
+    const blog = await prisma.blog.create({
       data: {
         title,
         content,
@@ -25,11 +25,11 @@ blog.post("/create", isAuthenticated, async (c) => {
         },
       },
     });
-    if (!post) throw "Post creation failed";
-    return c.json({ message: "Post created", post }, 200);
+    if (!blog) throw "Blog creation failed";
+    return c.json({ message: "Blog created", blog }, 200);
   } catch (error) {
     console.error(error);
-    return c.json({ message: "Post creation failed", error }, 400);
+    return c.json({ message: "Blog creation failed", error }, 400);
   }
 });
 
@@ -37,13 +37,13 @@ blog.get("/:title", async (c) => {
   const prisma = PrismaSingleton(c);
   const title = c.req.param("title");
   try {
-    const post = await prisma.blog.findFirst({
+    const blog = await prisma.blog.findFirst({
       where: {
         title,
       },
     });
-    if (!post) throw "Not found";
-    return c.json({ post }, 200);
+    if (!blog) throw "Not found";
+    return c.json({ blog }, 200);
   } catch (error) {
     console.error(error);
     return c.json({ error }, 400);

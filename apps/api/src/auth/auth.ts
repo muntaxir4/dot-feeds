@@ -2,12 +2,7 @@ import { Hono } from "hono";
 import { sign } from "hono/jwt";
 
 import { PrismaSingleton } from "../db";
-import {
-  getCookie,
-  getSignedCookie,
-  setCookie,
-  setSignedCookie,
-} from "hono/cookie";
+import { setSignedCookie } from "hono/cookie";
 
 const auth = new Hono<{
   Bindings: { JWT_SECRET: string; COOKIE_SECRET: string };
@@ -50,33 +45,19 @@ auth.post("/signin", async (c) => {
       id: user.id.substring(0, 5),
       username: user.username,
     };
-    const token = await sign(payload, c.env.JWT_SECRET);
-    console.log("JWTToken", token);
-
-    //not working with signed cookie
-    // await setSignedCookie(c, "token", token, c.env.COOKIE_SECRET, {
-    //   path: "/",
-    //   secure: true,
-    //   httpOnly: true,
-    //   maxAge: 1000,
-    //   expires: new Date(Date.UTC(2000, 11, 24, 10, 30, 59, 900)),
-    //   sameSite: "None",
-    // });
-
-    // const sgCookie = await getSignedCookie(c, "token", c.env.COOKIE_SECRET);
-
-    setCookie(c, "token", token, {
-      path: "/",
-      secure: true,
-      httpOnly: true,
-      maxAge: 1000,
-      expires: new Date(Date.UTC(2000, 11, 24, 10, 30, 59, 900)),
-      sameSite: "None",
-    });
-
-    const sgCookie = getCookie(c, "token");
-
-    // console.log("Signed Cookie", sgCookie);
+    const token = await sign(payload, process.env.JWT_SECRET as string);
+    await setSignedCookie(
+      c,
+      "token",
+      token,
+      process.env.COOKIE_SECRET as string,
+      {
+        path: "/",
+        secure: true,
+        httpOnly: true,
+        maxAge: 1000,
+      }
+    );
     return c.json({ message: "Signin success", user }, 200);
   } catch (error) {
     console.error(error);

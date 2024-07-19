@@ -10,7 +10,7 @@ api.route("/auth", authRoute);
 api.route("/blog", blogRoute);
 api.route("/u", userRoute);
 
-api.get("/", (c) => {
+api.get("/", async (c) => {
   return c.text("Health check success!");
 });
 
