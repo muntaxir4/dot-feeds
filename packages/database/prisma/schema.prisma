@@ -14,7 +14,7 @@ datasource db {
 
   url = env("DATABASE_URL") // uses connection pooling
 
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  directUrl = env("DATABASE_DIRECT_URL") // uses a direct connection
 
 }
 
