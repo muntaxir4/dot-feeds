@@ -4,13 +4,12 @@ import { PrismaSingleton } from "../db";
 import isAuthenticated from "../auth/authenticated";
 
 const blog = new Hono<{
-  Bindings: { JWT_SECRET: string; COOKIE_SECRET: string };
   Variables: { user: { id: number; username: string } };
 }>();
 
 blog.post("/create", isAuthenticated, async (c) => {
   const body = await c.req.json();
-  const prisma = PrismaSingleton(c);
+  const prisma = PrismaSingleton();
   const { username } = c.get("user");
   try {
     const { title, content } = body;
@@ -34,7 +33,7 @@ blog.post("/create", isAuthenticated, async (c) => {
 });
 
 blog.get("/:title", async (c) => {
-  const prisma = PrismaSingleton(c);
+  const prisma = PrismaSingleton();
   const title = c.req.param("title");
   try {
     const blog = await prisma.blog.findFirst({

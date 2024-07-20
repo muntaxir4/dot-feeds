@@ -8,7 +8,7 @@ const db: {
   prisma?: typeof prismaAccelerate;
 } = {};
 
-export const PrismaSingleton = (c: Context) => {
+export const PrismaSingleton = () => {
   if (db.prisma) return db.prisma;
   db.prisma = new PrismaClient({
     datasourceUrl: process.env.DATABASE_URL,

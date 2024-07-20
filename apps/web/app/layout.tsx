@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+import { Toaster } from "@/components/ui/toaster";
+
+import Layout from "@/components/Layout";
+import Navbar from "@/components/Navbar";
+import ThemeProvider from "@/components/theme-provider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -15,8 +21,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className="h-full">
+      <body className={inter.className + "  h-full "}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Layout className="w-full h-full flex flex-col">
+            <Navbar />
+            <main className="flex-grow">{children}</main>
+          </Layout>
+        </ThemeProvider>
+        <Toaster />
+      </body>
     </html>
   );
 }
