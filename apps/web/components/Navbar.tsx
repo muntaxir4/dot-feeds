@@ -43,7 +43,7 @@ export default function Navbar() {
         <h2 className="text-3xl font-bold  m-1 mx-2 ">Dot Feeds</h2>
       </Link>
 
-      <div className=" absolute right-4 m-1">
+      <div className=" absolute right-2 m-1">
         <NavbarExtras>
           <NavMenu />
         </NavbarExtras>

@@ -14,6 +14,7 @@ export default function NavbarExtras({
   return (
     <div className="flex gap-2 items-center">
       <Button
+        variant={"ghost"}
         onClick={() => setTheme(theme == "light" ? "dark" : "light")}
         className="p-1 h-1/2"
       >
